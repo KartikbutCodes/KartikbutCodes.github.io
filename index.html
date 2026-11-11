@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- EDIT: tab title -->
+<title>Your Name</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👋</text></svg>">
+<style>
+:root {
+  --bg: #f4f6ff;
+  --ink: #16163a;
+  --muted: #52527a;
+  --blue: #3b3bff;
+  --pink: #ff8fb8;
+  --sun: #ffd43b;
+  --mint: #12a37f;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 2.5rem 1.5rem;
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 1.125rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Soft colour blobs that drift and follow the pointer */
+.blob {
+  position: fixed; left: 0; top: 0;
+  width: min(34rem, 80vw); aspect-ratio: 1;
+  pointer-events: none; z-index: 0;
+  transition: transform 1s cubic-bezier(.2,.7,.2,1);
+}
+.blob i {
+  display: block; width: 100%; height: 100%; border-radius: 50%;
+  filter: blur(60px); opacity: .55;
+  animation: float 9s ease-in-out infinite alternate;
+}
+.b1 i { background: var(--pink); }
+.b2 i { background: var(--sun); animation-delay: -4s; }
+.b3 i { background: var(--blue); opacity: .3; animation-delay: -7s; }
+@keyframes float { to { transform: translate(4rem, -3rem) scale(1.15); } }
+
+main { position: relative; z-index: 1; width: 100%; max-width: 38rem; }
+
+.hi { font-size: 1.25rem; font-weight: 600; margin: 0 0 .5rem; }
+.wave { display: inline-block; transform-origin: 70% 75%; animation: wave 1.6s ease-in-out 1s 2; }
+@keyframes wave {
+  0%, 60%, 100% { transform: rotate(0); }
+  10%, 30% { transform: rotate(16deg); }
+  20%, 40% { transform: rotate(-10deg); }
+  50% { transform: rotate(10deg); }
+}
+
+h1 {
+  font: 800 clamp(3rem, 14vw, 6.5rem)/.95 "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: -.045em;
+  margin: 0 0 1.5rem;
+}
+.word { display: inline-block; white-space: nowrap; }
+.ch {
+  display: inline-block; cursor: default;
+  animation: pop .8s cubic-bezier(.2,1.5,.4,1) backwards;
+  animation-delay: calc(var(--i) * 55ms + 150ms);
+  transition: transform .25s cubic-bezier(.3,1.8,.5,1), color .2s;
+}
+.ch:hover { transform: translateY(-.14em) rotate(-5deg) scale(1.06); color: var(--c); }
+@keyframes pop { from { opacity: 0; transform: translateY(.7em) rotate(10deg) scale(.6); } }
+
+.role { font-size: clamp(1.35rem, 5vw, 1.75rem); font-weight: 700; margin: 0 0 1rem; }
+#word {
+  display: inline-block; padding: 0 .2em;
+  background: linear-gradient(var(--sun), var(--sun)) 0 85% / 100% 45% no-repeat;
+}
+#word.swap { animation: swap .5s cubic-bezier(.2,.8,.2,1); }
+@keyframes swap { from { opacity: 0; transform: translateY(.5em); background-size: 0 45%; } }
+
+.bio { color: var(--muted); max-width: 32rem; margin: 0 0 2rem; }
+
+.in { animation: up .7s cubic-bezier(.2,.8,.2,1) backwards; animation-delay: var(--d); }
+@keyframes up { from { opacity: 0; transform: translateY(18px); } }
+
+nav { display: flex; flex-wrap: wrap; gap: .9rem; }
+.btn {
+  padding: .7rem 1.3rem; border: 2px solid var(--ink); border-radius: 999px;
+  background: #fff; color: var(--ink); font-weight: 600; text-decoration: none;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: transform .15s, box-shadow .15s, background .15s;
+}
+.btn.primary { background: var(--blue); color: #fff; }
+.btn:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--ink); background: var(--sun); color: var(--ink); }
+.btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+.btn:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="blob b1" data-bx="5" data-by="5" data-f="1"><i></i></div>
+<div class="blob b2" data-bx="55" data-by="50" data-f="-1.3"><i></i></div>
+<div class="blob b3" data-bx="60" data-by="-10" data-f=".6"><i></i></div>
+
+<main>
+  <p class="hi in" style="--d:.1s"><span class="wave" aria-hidden="true">👋</span> Hi, I'm</p>
+
+  <!-- EDIT: your name (hover over the letters to play with them) -->
+  <h1 id="name">Your Name</h1>
+
+  <!-- EDIT: the first role is shown first; add or change the rest in the ROLES list in the script -->
+  <p class="role in" style="--d:.9s">A <span id="word" class="swap">web developer</span> from India.</p>
+
+  <!-- EDIT: two or three sentences about you -->
+  <p class="bio in" style="--d:1.05s">I like building small, useful things with code and I'm learning something new every week. Currently looking for projects and internships where I can grow.</p>
+
+  <nav class="in" style="--d:1.2s" aria-label="Links">
+    <!-- EDIT: your email and profile links -->
+    <a class="btn primary" href="mailto:you@example.com">Email me</a>
+    <a class="btn" href="https://github.com/your-username">GitHub</a>
+    <a class="btn" href="https://www.linkedin.com/in/your-username">LinkedIn</a>
+  </nav>
+</main>
+
+<script>
+// EDIT: words that rotate in "A ___ from India."
+const ROLES = ["web developer", "problem solver", "CS student", "curious builder"];
+
+// Split the name into letters so each one can animate
+const nameEl = document.getElementById("name");
+const text = nameEl.textContent.trim();
+const colours = ["var(--blue)", "#ef4f91", "var(--mint)"];
+nameEl.setAttribute("aria-label", text);
+nameEl.textContent = "";
+let i = 0;
+const words = text.split(" ");
+words.forEach((w, wi) => {
+  const ws = document.createElement("span");
+  ws.className = "word";
+  ws.setAttribute("aria-hidden", "true");
+  for (const c of w) {
+    const s = document.createElement("span");
+    s.className = "ch";
+    s.textContent = c;
+    s.style.setProperty("--i", i);
+    s.style.setProperty("--c", colours[i % colours.length]);
+    i++;
+    ws.appendChild(s);
+  }
+  nameEl.appendChild(ws);
+  if (wi < words.length - 1) nameEl.appendChild(document.createTextNode(" "));
+});
+
+// Rotate the role word
+const wordEl = document.getElementById("word");
+wordEl.textContent = ROLES[0];
+const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+if (!calm) {
+  let n = 0;
+  setInterval(() => {
+    n = (n + 1) % ROLES.length;
+    wordEl.classList.remove("swap");
+    void wordEl.offsetWidth;
+    wordEl.textContent = ROLES[n];
+    wordEl.classList.add("swap");
+  }, 2400);
+}
+
+// Blobs follow the pointer
+const blobs = [...document.querySelectorAll(".blob")];
+function place(px, py) {
+  blobs.forEach(b => {
+    const f = parseFloat(b.dataset.f);
+    b.style.transform = `translate(calc(${b.dataset.bx}vw + ${px * 80 * f}px), calc(${b.dataset.by}vh + ${py * 80 * f}px))`;
+  });
+}
+place(0, 0);
+if (!calm) {
+  addEventListener("pointermove", e => place(e.clientX / innerWidth - .5, e.clientY / innerHeight - .5));
+}
+</script>
+</body>
+</html>
